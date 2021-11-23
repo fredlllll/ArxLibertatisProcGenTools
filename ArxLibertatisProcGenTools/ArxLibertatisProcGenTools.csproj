@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>Exe</OutputType>
-    <StartupObject>ArxLibertatisProcGenTools.Program</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArxLibertatisEditorIO" Version="1.1.0" />
+    <PackageReference Include="ArxLibertatisEditorIO" Version="1.1.1" />
   </ItemGroup>
 
 </Project>
