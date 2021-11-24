@@ -14,6 +14,7 @@ namespace ArxLibertatisProcGenTools.MeshGens
     public class OBJImporter : IMeshGenerator
     {
         public Matrix4x4 worldMatrix = Matrix4x4.Identity;
+        public short room = 1;
 
         private class Vertex
         {
@@ -23,7 +24,7 @@ namespace ArxLibertatisProcGenTools.MeshGens
         {
             public string texture = null;
 
-            public Vertex[] vertices = new Vertex[3];
+            public Vertex[] vertices = new Vertex[] { new Vertex(), new Vertex(), new Vertex() };
         }
 
         private class Material
@@ -104,10 +105,9 @@ namespace ArxLibertatisProcGenTools.MeshGens
                             break;
                         case "f":
                             var f = new Face();
-                            for (int i = 1; i < 4; ++i)
-                            {
-                                ParseVertex(lineParts[i], f, i - 1);
-                            }
+                            ParseVertex(lineParts[1], f, 0);
+                            ParseVertex(lineParts[2], f, 2);
+                            ParseVertex(lineParts[3], f, 1);
                             f.texture = currentTexture;
                             faces.Add(f);
                             break;
@@ -138,6 +138,7 @@ namespace ArxLibertatisProcGenTools.MeshGens
                 var f = faces[i];
                 var p = new Polygon();
 
+                p.room = room;
                 p.texturePath = f.texture;
 
                 for (int j = 0; j < 3; ++j)
@@ -151,7 +152,8 @@ namespace ArxLibertatisProcGenTools.MeshGens
                     p.vertices[j].color = new Color(1, 1, 1);
                 }
 
-                //TODO: recalc area and the other shit, have to add that to editorio though
+                p.RecalculateNormals();
+                p.RecalculateArea();
 
                 yield return p;
             }
