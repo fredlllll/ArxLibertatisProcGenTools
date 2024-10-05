@@ -6,7 +6,7 @@ using System.IO;
 using System.Numerics;
 using System.Text;
 
-namespace ArxLibertatisProcGenTools.MeshGens
+namespace ArxLibertatisProcGenTools.Generators.Mesh
 {
     /// <summary>
     /// only supports triangulated obj files

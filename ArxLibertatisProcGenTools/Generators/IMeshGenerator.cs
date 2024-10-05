@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArxLibertatisProcGenTools.MeshGens
+namespace ArxLibertatisProcGenTools.Generators
 {
     public interface IMeshGenerator
     {
