@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArxLibertatisEditorIO" Version="2.1.7" />
+    <PackageReference Include="ArxLibertatisEditorIO" Version="2.1.8" />
+    <PackageReference Include="ArxLibertatisLightingCalculator" Version="1.1.3" />
   </ItemGroup>
 
   <ItemGroup>

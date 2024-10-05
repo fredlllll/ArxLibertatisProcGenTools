@@ -23,8 +23,8 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
             set
             {
                 var center = Center;
-                min = new Vector3(center.X - value.X / 2, center.Y, center.Z - value.Y / 2);
-                max = new Vector3(center.X + value.X / 2, center.Y, center.Z + value.Y / 2);
+                min = new Vector3(center.X - (value.X / 2), center.Y, center.Z - (value.Y / 2));
+                max = new Vector3(center.X + (value.X / 2), center.Y, center.Z + (value.Y / 2));
             }
         }
 
@@ -32,7 +32,7 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
         {
             get
             {
-                return max - min / 2;
+                return (max + min) / 2;
             }
             set
             {
