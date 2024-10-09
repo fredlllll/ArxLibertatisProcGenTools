@@ -79,9 +79,14 @@ namespace ArxLibertatisProcGenToolsTest
 
             procGenLevel.TerrainMeshes.Add(floor);
 
+            var enhance = new DetailEnhancer();
+            enhance.Shape = new Sphere() { Radius = 500, Falloff = 0 };
+
+            procGenLevel.TerrainMeshModifiers.Add(enhance);
+
             var rumble = new Rumble();
             var noise = new SimplexNoiseValue();
-            noise.Noise.Frequency = 0.0009;
+            noise.Noise.Frequency = 0.002;// 0.0009;
             noise.Noise.OctaveCount = 2;
             rumble.NoiseValue = noise;
             rumble.Magnitude = 100;
