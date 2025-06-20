@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
@@ -10,6 +7,21 @@ namespace ArxLibertatisProcGenTools.Shapes
         Vector3 GetAffectedness(Vector3 position);
 
         Vector3 GetRandomPosition();
+
+        public static readonly IShape NullShape = new NullShape();
+    }
+
+    public class NullShape : IShape
+    {
+        public Vector3 GetAffectedness(Vector3 position)
+        {
+            return Vector3.Zero;
+        }
+
+        public Vector3 GetRandomPosition()
+        {
+            return Vector3.Zero;
+        }
     }
 
     public static class IShapeExtensions

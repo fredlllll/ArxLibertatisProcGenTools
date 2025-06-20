@@ -1,9 +1,7 @@
 ﻿using ArxLibertatisEditorIO.WellDoneIO;
 using ArxLibertatisProcGenTools.Generators;
 using ArxLibertatisProcGenTools.Modifiers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools
 {

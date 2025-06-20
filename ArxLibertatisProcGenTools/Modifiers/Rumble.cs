@@ -1,11 +1,7 @@
 ﻿using ArxLibertatisEditorIO.WellDoneIO;
 using ArxLibertatisProcGenTools.Shapes;
 using ArxLibertatisProcGenTools.Values;
-using SharpNoise.Modules;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools.Modifiers
 {
@@ -13,9 +9,9 @@ namespace ArxLibertatisProcGenTools.Modifiers
     {
         public float Magnitude { get; set; } = 20;
 
-        public IShape Shape { get; set; }
+        public IShape Shape { get; set; } = IShape.NullShape;
 
-        public IValue NoiseValue { get; set; }
+        public IValue NoiseValue { get; set; } = IValue.NullValue;
 
         public void Apply(WellDoneArxLevel wdl)
         {

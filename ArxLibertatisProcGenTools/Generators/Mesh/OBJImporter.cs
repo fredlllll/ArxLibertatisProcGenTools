@@ -1,10 +1,8 @@
 ﻿using ArxLibertatisEditorIO.Util;
 using ArxLibertatisEditorIO.WellDoneIO;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools.Generators.Mesh
 {
@@ -22,21 +20,21 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
         }
         private class Face
         {
-            public string texture = null;
+            public string texture = "";
 
             public Vertex[] vertices = new Vertex[] { new Vertex(), new Vertex(), new Vertex() };
         }
 
         private class Material
         {
-            public string texture;
+            public string texture = "";
         }
 
-        private List<Vector3> vertices = new List<Vector3>();
-        private List<Vector2> textureCoordinates = new List<Vector2>();
-        private List<Vector3> normals = new List<Vector3>();
-        private List<Face> faces = new List<Face>();
-        private Dictionary<string, Material> materials = new Dictionary<string, Material>();
+        private readonly List<Vector3> vertices = new List<Vector3>();
+        private readonly List<Vector2> textureCoordinates = new List<Vector2>();
+        private readonly List<Vector3> normals = new List<Vector3>();
+        private readonly List<Face> faces = new List<Face>();
+        private readonly Dictionary<string, Material> materials = new Dictionary<string, Material>();
 
         public OBJImporter(string objFilePath, string mtlFilePath)
         {
@@ -56,65 +54,60 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
 
         private void ParseMtl(string mtlFilePath)
         {
-            string matName = null;
+            string matName = "";
 
-            using (var fs = new FileStream(mtlFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var s = new StreamReader(fs))
+            using var fs = new FileStream(mtlFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var s = new StreamReader(fs);
+            while (!s.EndOfStream)
             {
-                while (!s.EndOfStream)
+                var l = s.ReadLine().Trim();
+                var lineParts = l.Split(' ');
+                switch (lineParts[0])
                 {
-                    var l = s.ReadLine().Trim();
-                    var lineParts = l.Split(' ');
-                    switch (lineParts[0])
-                    {
-                        case "newmtl":
-                            matName = lineParts[1];
-                            break;
-                        case "map_Kd":
-                            materials[matName] = new Material() { texture = l.Substring(lineParts[0].Length + 1).Trim() };
-                            break;
-                    }
+                    case "newmtl":
+                        matName = lineParts[1];
+                        break;
+                    case "map_Kd":
+                        materials[matName] = new Material() { texture = l.Substring(lineParts[0].Length + 1).Trim() };
+                        break;
                 }
             }
         }
 
         private void ParseObj(string objFilePath)
         {
-            string currentTexture = null;
+            string currentTexture = "";
 
-            using (var fs = new FileStream(objFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var s = new StreamReader(fs))
+            using var fs = new FileStream(objFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var s = new StreamReader(fs);
+            while (!s.EndOfStream)
             {
-                while (!s.EndOfStream)
+                var l = s.ReadLine().Trim();
+                var lineParts = l.Split(' ');
+                switch (lineParts[0])
                 {
-                    var l = s.ReadLine().Trim();
-                    var lineParts = l.Split(' ');
-                    switch (lineParts[0])
-                    {
-                        case "v":
-                            vertices.Add(new Vector3(ParseFloat(lineParts[1]), ParseFloat(lineParts[2]), ParseFloat(lineParts[3])));
-                            break;
-                        case "vt":
-                            textureCoordinates.Add(new Vector2(ParseFloat(lineParts[1]), ParseFloat(lineParts[2])));
-                            break;
-                        case "vn":
-                            normals.Add(new Vector3(ParseFloat(lineParts[1]), ParseFloat(lineParts[2]), ParseFloat(lineParts[3])));
-                            break;
-                        case "usemtl":
-                            currentTexture = materials[l.Substring(lineParts[0].Length + 1).Trim()].texture;
-                            break;
-                        case "f":
-                            var f = new Face();
-                            ParseVertex(lineParts[1], f, 0);
-                            ParseVertex(lineParts[2], f, 2);
-                            ParseVertex(lineParts[3], f, 1);
-                            f.texture = currentTexture;
-                            faces.Add(f);
-                            break;
-                    }
+                    case "v":
+                        vertices.Add(new Vector3(ParseFloat(lineParts[1]), ParseFloat(lineParts[2]), ParseFloat(lineParts[3])));
+                        break;
+                    case "vt":
+                        textureCoordinates.Add(new Vector2(ParseFloat(lineParts[1]), ParseFloat(lineParts[2])));
+                        break;
+                    case "vn":
+                        normals.Add(new Vector3(ParseFloat(lineParts[1]), ParseFloat(lineParts[2]), ParseFloat(lineParts[3])));
+                        break;
+                    case "usemtl":
+                        currentTexture = materials[l.Substring(lineParts[0].Length + 1).Trim()].texture;
+                        break;
+                    case "f":
+                        var f = new Face();
+                        ParseVertex(lineParts[1], f, 0);
+                        ParseVertex(lineParts[2], f, 2);
+                        ParseVertex(lineParts[3], f, 1);
+                        f.texture = currentTexture;
+                        faces.Add(f);
+                        break;
                 }
             }
-
         }
 
         private void ParseVertex(string v, Face f, int index)
@@ -136,10 +129,11 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
             for (int i = 0; i < faces.Count; ++i)
             {
                 var f = faces[i];
-                var p = new Polygon();
-
-                p.room = room;
-                p.texturePath = f.texture;
+                var p = new Polygon
+                {
+                    room = room,
+                    texturePath = f.texture
+                };
 
                 for (int j = 0; j < 3; ++j)
                 {

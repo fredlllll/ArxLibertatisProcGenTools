@@ -1,18 +1,15 @@
 ﻿using ArxLibertatisEditorIO.WellDoneIO;
 using ArxLibertatisProcGenTools.Shapes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools.Modifiers
 {
     public class DetailEnhancer : IModifier
     {
-        public IShape Shape { get; set; }
+        public IShape Shape { get; set; } = IShape.NullShape;
 
-        private IEnumerable<Polygon> getEnhancedPolygons(Vertex a, Vertex b, Vertex c)
+        private IEnumerable<Polygon> GetEnhancedPolygons(Vertex a, Vertex b, Vertex c)
         {
             var ab_pos = (a.position + b.position) / 2;
             var ac_pos = (a.position + c.position) / 2;
@@ -103,10 +100,10 @@ namespace ArxLibertatisProcGenTools.Modifiers
                     continue;
                 }
 
-                var newPolygonsLazy = getEnhancedPolygons(polygon.vertices[0], polygon.vertices[1], polygon.vertices[2]);
+                var newPolygonsLazy = GetEnhancedPolygons(polygon.vertices[0], polygon.vertices[1], polygon.vertices[2]);
                 if (polygon.polyType == ArxLibertatisEditorIO.Util.PolyType.QUAD)
                 {
-                    newPolygonsLazy = newPolygonsLazy.Concat(getEnhancedPolygons(polygon.vertices[2], polygon.vertices[1], polygon.vertices[3]));
+                    newPolygonsLazy = newPolygonsLazy.Concat(GetEnhancedPolygons(polygon.vertices[2], polygon.vertices[1], polygon.vertices[3]));
                 }
 
                 var newPolygons = newPolygonsLazy.ToArray();

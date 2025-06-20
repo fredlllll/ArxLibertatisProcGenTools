@@ -4,11 +4,21 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <OutputType>Library</OutputType>
     <StartupObject></StartupObject>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ArxLibertatisEditorIO" Version="2.1.8" />
+    <PackageReference Include="ArxLibertatisLightingCalculatorLib" Version="1.1.3" />
     <PackageReference Include="SharpNoise" Version="0.12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="example.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

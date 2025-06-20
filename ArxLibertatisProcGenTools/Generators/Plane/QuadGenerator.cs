@@ -1,9 +1,7 @@
 ﻿using ArxLibertatisEditorIO.Util;
 using ArxLibertatisEditorIO.WellDoneIO;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools.Generators.Plane
 {
@@ -16,7 +14,7 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
         public float minV = 0, maxV = 1;
         public short room = 1;
         public PolyType polyType;
-        public string texturePath;
+        public string texturePath = "";
         public float transVal = 0;
 
         public IEnumerable<Polygon> GetPolygons()

@@ -1,9 +1,7 @@
 ﻿using ArxLibertatisEditorIO.WellDoneIO;
-using ArxLibertatisProcGenTools.Generators;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ArxLibertatisProcGenTools.Generators.Plane
 {
@@ -11,7 +9,7 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
     {
         private Vector3 min = Vector3.Zero, max = Vector3.UnitX + Vector3.UnitZ;
 
-        public ITextureGenerator TextureGenerator { get; set; }
+        public ITextureGenerator? TextureGenerator { get; set; }
 
         public Vector2 Size
         {
@@ -56,9 +54,11 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
             float xStep = size.X / segmentsX;
             float zStep = size.Y / segmentsZ;
 
-            QuadGenerator quadGen = new QuadGenerator();
-            quadGen.width = xStep;
-            quadGen.height = zStep;
+            QuadGenerator quadGen = new QuadGenerator
+            {
+                width = xStep,
+                height = zStep
+            };
 
             int polygonIndex = 0;
             Vector3 here = new Vector3(xStart-xStep/2,center.Y,zStart-zStep/2);

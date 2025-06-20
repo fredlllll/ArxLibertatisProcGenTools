@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ArxLibertatisProcGenTools.Generators.Texture
+﻿namespace ArxLibertatisProcGenTools.Generators.Texture
 {
     public class SingleTexture : ITextureGenerator
     {

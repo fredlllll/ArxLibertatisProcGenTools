@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using System.Numerics;
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
     public class MultiplyShape : IShape
     {
-        public IShape Shape1 { get; set; }
-        public IShape Shape2 { get; set; }
+        public IShape Shape1 { get; set; } = IShape.NullShape;
+        public IShape Shape2 { get; set; } = IShape.NullShape;
 
         public Vector3 GetAffectedness(Vector3 position)
         {
