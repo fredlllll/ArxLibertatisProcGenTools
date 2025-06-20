@@ -5,7 +5,6 @@ using ArxLibertatisEditorIO.WellDoneIO;
 using ArxLibertatisLightingCalculatorLib;
 using ArxLibertatisProcGenTools.Generators;
 using ArxLibertatisProcGenTools.Modifiers;
-using BepuPhysics.Constraints.Contact;
 using System;
 using System.Numerics;
 
