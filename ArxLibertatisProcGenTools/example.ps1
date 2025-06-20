@@ -26,7 +26,7 @@ Add-Type -Path "ArxLibertatisProcGenTools.dll"
 # add a floor
 $floor = New-Object FloorGenerator
 $floor.Size = New-Object Vector2(5000, 5000)
-$floor.Center = New-Object Vector3(0, -100, 0)
+$floor.Center = New-Object Vector3(6000, -100, 6000)
 $floor.TextureGenerator = New-Object SingleTexture("graph\obj3d\textures\[soil]_human_standard2.jpg")
 [ArxLibertatisProcGenTools.ScriptFunc]::Apply($floor)
 
@@ -47,6 +47,7 @@ $rumble.NoiseValue = $noise
 $rumble.Magnitude = 100
 
 $shape = New-Object Sphere
+$shape.Center = New-Object Vector3(6000,0,6000)
 $shape.Radius = 2000
 $shape.Falloff = 1000
 
@@ -58,7 +59,7 @@ $rumble.Shape = [ArxLibertatisProcGenTools.Shapes.IShapeExtensions]::MultiplyWit
 
 #add a light
 $light = New-Object ArxLibertatisEditorIO.WellDoneIO.Light
-$light.position = New-Object Vector3(0,-400,0)
+$light.position = New-Object Vector3(6000,-400,6000)
 $light.color = New-Object Color(1,0.7,0.7)
 $light.fallStart = 100
 $light.fallEnd = 1000
@@ -69,7 +70,7 @@ $light.intensity = 1
 [ArxLibertatisProcGenTools.ScriptFunc]::SetLightingProfile([ArxLibertatisLightingCalculatorLib.LightingProfile]::DistanceAngleShadow)
 
 #set player starting position
-$pos = New-Object Vector3(0,-500,0)
+$pos = New-Object Vector3(6000,-500,6000)
 [ArxLibertatisProcGenTools.ScriptFunc]::SetPlayerStart($pos)
 
 #save level
