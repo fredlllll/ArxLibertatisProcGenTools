@@ -2,6 +2,7 @@
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
+    [Description("Returns a fixed value")]
     public class FixedVector : IShape
     {
         public FixedVector() { }

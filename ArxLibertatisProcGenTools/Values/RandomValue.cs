@@ -2,6 +2,7 @@
 
 namespace ArxLibertatisProcGenTools.Values
 {
+    [Description("random value (uniform)")]
     public class RandomValue : IValue
     {
         public float Min { get; set; } = 0;

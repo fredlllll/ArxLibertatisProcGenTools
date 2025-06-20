@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace ArxLibertatisProcGenTools
 {
-    public static class ScriptFunc
+    public static partial class ScriptFunc
     {
         private static WellDoneArxLevel? level = null;
         private static LightingProfile lightingProfile = LightingProfile.Danae;
@@ -25,6 +25,7 @@ namespace ArxLibertatisProcGenTools
             }
         }
 
+        [Description("deletes the level currently in memory. required cause its persistent during the powershell session")]
         public static void Clear()
         {
             Console.WriteLine("Clearing Data");
@@ -33,12 +34,14 @@ namespace ArxLibertatisProcGenTools
             playerStartPosition = Vector3.Zero;
         }
 
+        [Description("Set data dir that the level is saved to (and can be loaded from)")]
         public static void SetDataDir(string dataDir)
         {
             Console.WriteLine("Setting Data Dir");
             ArxPaths.DataDir = dataDir;
         }
 
+        [Description("Loads a level to be modified")]
         public static void LoadLevel(string name)
         {
             Console.WriteLine("Loading Level");
@@ -49,6 +52,7 @@ namespace ArxLibertatisProcGenTools
             level.LoadFrom(mal.LoadFrom(lvl));
         }
 
+        [Description("Saves the level")]
         public static void SaveLevel(string name)
         {
             Console.WriteLine("Saving Level");
@@ -63,18 +67,21 @@ namespace ArxLibertatisProcGenTools
             ral.SaveLevel(name, true);
         }
 
+        [Description("Applies the Mesh Generator to the level")]
         public static void Apply(IMeshGenerator meshGenerator)
         {
             Console.WriteLine("Applying Mesh Generator");
             Level.polygons.AddRange(meshGenerator.GetPolygons());
         }
 
+        [Description("Applies the Modifier to the level")]
         public static void Apply(IModifier meshModifier)
         {
             Console.WriteLine("Applying Modifier");
             meshModifier.Apply(Level);
         }
 
+        [Description("Applies the Light Generator to the level")]
         public static void Apply(ILightGenerator lightGenerator)
         {
             Console.WriteLine("Applying Light Generator");

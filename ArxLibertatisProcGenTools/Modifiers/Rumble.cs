@@ -5,6 +5,7 @@ using System.Numerics;
 
 namespace ArxLibertatisProcGenTools.Modifiers
 {
+    [Description("Adds random offsets(noise) to polygons in an area")]
     public class Rumble : IModifier
     {
         public float Magnitude { get; set; } = 20;

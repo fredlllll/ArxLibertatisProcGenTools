@@ -5,6 +5,7 @@ using System.Numerics;
 
 namespace ArxLibertatisProcGenTools.Generators.Plane
 {
+    [Description("Generates a flat surface of a certain size around a center, using a texture generator")]
     public class FloorGenerator : IMeshGenerator
     {
         private Vector3 min = Vector3.Zero, max = Vector3.UnitX + Vector3.UnitZ;
@@ -56,8 +57,8 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
 
             QuadGenerator quadGen = new QuadGenerator
             {
-                width = xStep,
-                height = zStep
+                Width = xStep,
+                Height = zStep
             };
 
             int polygonIndex = 0;
@@ -69,10 +70,10 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
                 {
                     here.Z += zStep;
                     if (TextureGenerator != null) {
-                        quadGen.texturePath = TextureGenerator.GetTexturePath(polygonIndex);
+                        quadGen.TexturePath = TextureGenerator.GetTexturePath(polygonIndex);
                     }
 
-                    quadGen.center = here;
+                    quadGen.Center = here;
 
                     yield return quadGen.GetPolygon();
                 }

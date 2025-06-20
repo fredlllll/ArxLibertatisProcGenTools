@@ -2,6 +2,7 @@
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
+    [Description("The shape of a cube")]
     public class Cuboid : IShape
     {
         public Vector3 Min { get; set; }

@@ -2,6 +2,7 @@
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
+    [Description("returns the multiplication of two shapes")]
     public class MultiplyShape : IShape
     {
         public IShape Shape1 { get; set; } = IShape.NullShape;

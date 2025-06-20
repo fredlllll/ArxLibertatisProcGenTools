@@ -9,6 +9,7 @@ namespace ArxLibertatisProcGenTools.Values
         public static readonly IValue NullValue = new NullValue();
     }
 
+    [Description("Always returns zero")]
     public class NullValue : IValue
     {
         public float GetValue(Vector3 input)

@@ -2,10 +2,12 @@
 
 namespace ArxLibertatisProcGenTools.Shapes
 {
+    [Description("the shape of a sphere")]
     public class Sphere : IShape
     {
         public Vector3 Center { get; set; } = Vector3.Zero;
         public float Radius { get; set; } = 500;
+        [Description("the falloff area around the edge of the sphere (r:500, f:200 => falloff from 400 to 600)")]
         public float Falloff { get; set; } = 200;
         public Vector3 GetAffectedness(Vector3 position)
         {

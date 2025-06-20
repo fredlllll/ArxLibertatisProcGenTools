@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace ArxLibertatisProcGenTools.Generators.Light
 {
+    [Description("Generates lights at random positions within its shape, with random attributes dictated by their shapes")]
     public class RandomLightGenerator : ILightGenerator
     {
         public int Count { get; set; } = 1;

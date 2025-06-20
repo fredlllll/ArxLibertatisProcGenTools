@@ -2,6 +2,7 @@
 
 namespace ArxLibertatisProcGenTools.Values
 {
+    [Description("A fixed value")]
     public class FixedValue : IValue
     {
         public FixedValue() { }

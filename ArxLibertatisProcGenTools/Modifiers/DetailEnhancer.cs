@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace ArxLibertatisProcGenTools.Modifiers
 {
+    [Description("Generates extra polygons in an area so it can be sculpted to a greater detail by modifiers")]
     public class DetailEnhancer : IModifier
     {
         public IShape Shape { get; set; } = IShape.NullShape;

@@ -33,13 +33,13 @@ namespace ArxLibertatisProcGenToolsTest
             //monkepos 8550 3050 8800
 
             OBJImporter o = new OBJImporter(@"C:\Users\Freddy\Desktop\monke.obj", @"C:\Users\Freddy\Desktop\monke.mtl");
-            o.room = 40;
+            o.Room = 40;
 
             Vector3 pos = new Vector3(8550, -3050, 8800);
 
             var translation = Matrix4x4.CreateTranslation(pos);
             var scale = Matrix4x4.CreateScale(100);
-            o.worldMatrix = scale * translation;
+            o.WorldMatrix = scale * translation;
 
             wdl.polygons.AddRange(o.GetPolygons());
 

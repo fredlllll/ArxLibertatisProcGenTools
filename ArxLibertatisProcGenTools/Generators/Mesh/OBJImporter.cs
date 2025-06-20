@@ -9,10 +9,11 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
     /// <summary>
     /// only supports triangulated obj files
     /// </summary>
+    [Description("Imports obj files, only supports triangulated files. set Pos/Rot/Scale using WorldMatrix")]
     public class OBJImporter : IMeshGenerator
     {
-        public Matrix4x4 worldMatrix = Matrix4x4.Identity;
-        public short room = 1;
+        public Matrix4x4 WorldMatrix { get; set; } = Matrix4x4.Identity;
+        public short Room { get; set; } = 1;
 
         private class Vertex
         {
@@ -131,17 +132,17 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
                 var f = faces[i];
                 var p = new Polygon
                 {
-                    room = room,
+                    room = Room,
                     texturePath = f.texture
                 };
 
                 for (int j = 0; j < 3; ++j)
                 {
-                    p.vertices[j].position = Vector3.Transform(vertices[f.vertices[j].v], worldMatrix);
+                    p.vertices[j].position = Vector3.Transform(vertices[f.vertices[j].v], WorldMatrix);
                     p.vertices[j].position.Y = -p.vertices[j].position.Y; //invert Y cause thats how arx rolls
                     p.vertices[j].uv = textureCoordinates[f.vertices[j].uv];
                     p.vertices[j].uv.Y = 1 - p.vertices[j].uv.Y; //arx again
-                    p.vertices[j].normal = Vector3.TransformNormal(normals[f.vertices[j].n], worldMatrix);
+                    p.vertices[j].normal = Vector3.TransformNormal(normals[f.vertices[j].n], WorldMatrix);
                     p.vertices[j].normal.Y = -p.vertices[j].normal.Y; //fingers crossed it works for normals too
                     p.vertices[j].color = new Color(1, 1, 1);
                 }

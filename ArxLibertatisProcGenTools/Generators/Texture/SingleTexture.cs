@@ -1,5 +1,6 @@
 ﻿namespace ArxLibertatisProcGenTools.Generators.Texture
 {
+    [Description("Returns just a fixed texture")]
     public class SingleTexture : ITextureGenerator
     {
         private readonly string path;

@@ -5,17 +5,23 @@ using System.Numerics;
 
 namespace ArxLibertatisProcGenTools.Generators.Plane
 {
+    [Description("Generates a single quad in a certain orientation")]
     public class QuadGenerator : IMeshGenerator
     {
-        public Vector3 center;
-        public float width = 100, height = 100;
-        public Vector3 normal = new Vector3(0, -1, 0), worldUp = new Vector3(0, -1, -0.000001f); //offset normal a bit so calculations work hopefully
-        public float minU = 0, maxU = 1;
-        public float minV = 0, maxV = 1;
-        public short room = 1;
-        public PolyType polyType;
-        public string texturePath = "";
-        public float transVal = 0;
+        public Vector3 Center { get; set; }
+        public float Width { get; set; } = 100;
+        public float Height { get; set; } = 100;
+        public Vector3 Normal { get; set; } = new Vector3(0, -1, 0);
+        public Vector3 WorldUp { get; set; } = new Vector3(0, -1, -0.000001f); //offset normal a bit so calculations work hopefully
+
+        public float MinU { get; set; } = 0;
+        public float MaxU { get; set; } = 1;
+        public float MinV { get; set; } = 0;
+        public float MaxV { get; set; } = 1;
+        public short Room { get; set; } = 1;
+        public PolyType PolyType { get; set; }
+        public string TexturePath { get; set; } = "";
+        public float TransVal { get; set; } = 0;
 
         public IEnumerable<Polygon> GetPolygons()
         {
@@ -26,32 +32,32 @@ namespace ArxLibertatisProcGenTools.Generators.Plane
         {
             Polygon p = new Polygon();
 
-            Vector3 polyRight = Vector3.Normalize(Vector3.Cross(worldUp, normal)) * width;
-            Vector3 polyUp = Vector3.Normalize(Vector3.Cross(normal, polyRight)) * height;
+            Vector3 polyRight = Vector3.Normalize(Vector3.Cross(WorldUp, Normal)) * Width;
+            Vector3 polyUp = Vector3.Normalize(Vector3.Cross(Normal, polyRight)) * Height;
 
-            p.vertices[0].position = center - polyRight / 2 + polyUp / 2;
-            p.vertices[0].uv.X = minU;
-            p.vertices[0].uv.Y = maxV;
-            p.vertices[2].position = center + polyRight / 2 + polyUp / 2;
-            p.vertices[2].uv.X = maxU;
-            p.vertices[2].uv.Y = maxV;
-            p.vertices[1].position = center - polyRight / 2 - polyUp / 2;
-            p.vertices[1].uv.X = minU;
-            p.vertices[1].uv.Y = minV;
-            p.vertices[3].position = center + polyRight / 2 - polyUp / 2;
-            p.vertices[3].uv.X = maxU;
-            p.vertices[3].uv.Y = minV;
+            p.vertices[0].position = Center - polyRight / 2 + polyUp / 2;
+            p.vertices[0].uv.X = MinU;
+            p.vertices[0].uv.Y = MaxV;
+            p.vertices[2].position = Center + polyRight / 2 + polyUp / 2;
+            p.vertices[2].uv.X = MaxU;
+            p.vertices[2].uv.Y = MaxV;
+            p.vertices[1].position = Center - polyRight / 2 - polyUp / 2;
+            p.vertices[1].uv.X = MinU;
+            p.vertices[1].uv.Y = MinV;
+            p.vertices[3].position = Center + polyRight / 2 - polyUp / 2;
+            p.vertices[3].uv.X = MaxU;
+            p.vertices[3].uv.Y = MinV;
 
             for (int i = 0; i < 4; ++i)
             {
-                p.vertices[i].normal = normal;
+                p.vertices[i].normal = Normal;
                 p.vertices[i].color = new Color(1, 1, 1);
             }
-            p.norm = p.norm2 = normal;
-            p.room = room;
-            p.polyType = polyType | PolyType.QUAD;
-            p.texturePath = texturePath;
-            p.transVal = transVal;
+            p.norm = p.norm2 = Normal;
+            p.room = Room;
+            p.polyType = PolyType | PolyType.QUAD;
+            p.texturePath = TexturePath;
+            p.transVal = TransVal;
             p.RecalculateArea();
 
             return p;

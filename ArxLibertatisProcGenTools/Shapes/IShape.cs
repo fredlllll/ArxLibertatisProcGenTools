@@ -11,6 +11,7 @@ namespace ArxLibertatisProcGenTools.Shapes
         public static readonly IShape NullShape = new NullShape();
     }
 
+    [Description("Always returns zero")]
     public class NullShape : IShape
     {
         public Vector3 GetAffectedness(Vector3 position)
