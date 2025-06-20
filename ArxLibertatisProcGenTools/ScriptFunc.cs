@@ -5,6 +5,7 @@ using ArxLibertatisEditorIO.WellDoneIO;
 using ArxLibertatisLightingCalculatorLib;
 using ArxLibertatisProcGenTools.Generators;
 using ArxLibertatisProcGenTools.Modifiers;
+using BepuPhysics.Constraints.Contact;
 using System;
 using System.Numerics;
 
@@ -25,13 +26,17 @@ namespace ArxLibertatisProcGenTools
             }
         }
 
-        [Description("deletes the level currently in memory. required cause its persistent during the powershell session")]
+        [Description("Skip the lighting calculation on save")]
+        public static bool SkipLighting { get; set; } = false;
+
+        [Description("deletes the level currently in memory and resets parameters. required cause its persistent during the powershell session")]
         public static void Clear()
         {
             Console.WriteLine("Clearing Data");
             level = null;
             lightingProfile = LightingProfile.Danae;
             playerStartPosition = Vector3.Zero;
+            SkipLighting = false;
         }
 
         [Description("Set data dir that the level is saved to (and can be loaded from)")]
@@ -50,6 +55,7 @@ namespace ArxLibertatisProcGenTools
             level = new WellDoneArxLevel();
             lvl.LoadLevel(name);
             level.LoadFrom(mal.LoadFrom(lvl));
+            playerStartPosition = mal.DLF.header.positionEdit;
         }
 
         [Description("Saves the level")]
@@ -60,7 +66,10 @@ namespace ArxLibertatisProcGenTools
             var ral = new RawArxLevel();
             Level.SaveTo(mal);
 
-            ArxLibertatisLightingCalculator.Calculate(mal, lightingProfile);
+            if (!SkipLighting)
+            {
+                ArxLibertatisLightingCalculator.Calculate(mal, lightingProfile);
+            }
 
             mal.DLF.header.positionEdit = playerStartPosition;
             mal.SaveTo(ral);
