@@ -130,8 +130,9 @@ namespace ArxLibertatisProcGenToolsTest
         {
             ArxPaths.DataDir = @"F:\Program Files\Arx Libertatis";
 
-            ProcGen();
+            //ProcGen();
             //Console.ReadLine();
+            //ArxLibertatisProcGenTools.ScriptFunc.CSGTest();
         }
     }
 }
