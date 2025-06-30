@@ -12,15 +12,43 @@ namespace ArxLibertatisProcGenTools
 {
     public static partial class ScriptFunc
     {
+        public static bool Markdown { get; set; } = false;
+
+        private static void WriteLine(string text)
+        {
+            if (Markdown)
+            {
+                //replace leading spaces
+                if (text.StartsWith(' '))
+                {
+                    int count = text.TakeWhile(x => x == ' ').Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        Console.Write("&nbsp;");
+                    }
+                    Console.WriteLine(text[count..]);
+                }
+                else
+                {
+                    Console.WriteLine(text);
+                }
+            }
+            else
+            {
+                Console.WriteLine(text.Replace("<br>",""));
+            }
+        }
+
+
         private static void PrintMethods(IEnumerable<MethodInfo> methods)
         {
             foreach (var method in methods)
             {
-                Console.WriteLine($"    {(method.IsStatic ? "static " : "")}{method.ReturnType.Name} {method.Name}({string.Join(", ", method.GetParameters().Select(x => x.ToString()))})");
+                WriteLine($"    {(method.IsStatic ? "static " : "")}{method.ReturnType.Name} {method.Name}({string.Join(", ", method.GetParameters().Select(x => x.ToString()))})<br>");
                 var desc = method.GetCustomAttribute<DescriptionAttribute>();
                 if (desc != null)
                 {
-                    Console.WriteLine($"      {desc.Description}");
+                    WriteLine($"      {desc.Description}<br>");
                 }
             }
         }
@@ -29,11 +57,11 @@ namespace ArxLibertatisProcGenTools
         {
             foreach (var prop in props)
             {
-                Console.WriteLine($"    {(prop.GetMethod.IsStatic ? "static " : "")}{prop.PropertyType.Name} {prop.Name}");
+                WriteLine($"    {(prop.GetMethod.IsStatic ? "static " : "")}{prop.PropertyType.Name} {prop.Name}<br>");
                 var desc = prop.GetCustomAttribute<DescriptionAttribute>();
                 if (desc != null)
                 {
-                    Console.WriteLine($"      {desc.Description}");
+                    WriteLine($"      {desc.Description}<br>");
                 }
             }
         }
@@ -42,74 +70,74 @@ namespace ArxLibertatisProcGenTools
         {
             foreach (var t in types)
             {
-                Console.WriteLine(t.FullName);
+                WriteLine($"**{t.FullName}**<br>");
                 var desc = t.GetCustomAttribute<DescriptionAttribute>();
                 if (desc != null)
                 {
-                    Console.WriteLine(desc.Description);
+                    WriteLine($"{desc.Description}<br>");
                 }
-                Console.WriteLine("  Constructors:");
+                WriteLine("  Constructors:<br>");
                 var constructors = t.GetConstructors();
                 foreach (var constructor in constructors)
                 {
-                    Console.WriteLine($"    {t.Name}({string.Join(", ", constructor.GetParameters().Select(x => x.ToString()))})");
+                    WriteLine($"    {t.Name}({string.Join(", ", constructor.GetParameters().Select(x => x.ToString()))})<br>");
                 }
 
-                Console.WriteLine("  Properties:");
+                WriteLine("  Properties:<br>");
                 var props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                 PrintProperties(props);
 
-                Console.WriteLine("  Methods:");
+                WriteLine("  Methods:<br>");
                 var methods = t.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(m => !m.IsSpecialName);
                 PrintMethods(methods);
-                Console.WriteLine();
+                WriteLine("<br>");
             }
         }
         public static void PrintPsDocs()
         {
-            Console.WriteLine("Powershell Documentation:");
-            Console.WriteLine("This is a listing of all relevant classes and functions for generating levels in powershell scripts");
+            WriteLine("# Powershell Documentation:");
+            WriteLine("## This is a listing of all relevant classes and functions for generating levels in powershell scripts");
 
             Type baseInterface = typeof(IMeshGenerator);
-            Console.WriteLine("Mesh Generators are classes that will generate polygons that will be added to the level. These are available:");
+            WriteLine("### Mesh Generators are classes that will generate polygons that will be added to the level. These are available:");
             var childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine("Light generators generate lights that will be added to the level. These are available:");
+            WriteLine("### Light generators generate lights that will be added to the level. These are available:");
             baseInterface = typeof(ILightGenerator);
             childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine("Texture generators generate texture names depending on position. These are available:");
+            WriteLine("### Texture generators generate texture names depending on position. These are available:");
             baseInterface = typeof(ITextureGenerator);
             childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine("Modifiers modify the currently existing polygons. These are available:");
+            WriteLine("### Modifiers modify the currently existing polygons. These are available:");
             baseInterface = typeof(IModifier);
             childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine("Shapes can be used in a lot of ways to shape the output of other classes. These are available:");
+            WriteLine("### Shapes can be used in a lot of ways to shape the output of other classes. These are available:");
             baseInterface = typeof(IShape);
             childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine("Values are similar to Shapes, just one dimensional. These are available:");
+            WriteLine("### Values are similar to Shapes, just one dimensional. These are available:");
             baseInterface = typeof(IValue);
             childTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes()).Where(p => baseInterface.IsAssignableFrom(p) && p != baseInterface);
             PrintTypes(childTypes);
 
-            Console.WriteLine($"In addition to these classes, there is the {nameof(ScriptFunc)} class, which contains static functions that make scripting easier:");
-            Console.WriteLine("  Properties:");
+            WriteLine($"### In addition to these classes, there is the {nameof(ScriptFunc)} class, which contains static functions that make scripting easier:");
+            WriteLine("  Properties:<br>");
             var props = typeof(ScriptFunc).GetProperties(BindingFlags.Public | BindingFlags.Static);
             PrintProperties(props);
-            Console.WriteLine("  Methods:");
+            WriteLine("  Methods:<br>");
             var methods = typeof(ScriptFunc).GetMethods(BindingFlags.Static | BindingFlags.Public).Where(m => !m.IsSpecialName);
             PrintMethods(methods);
 
-            Console.WriteLine();
-            Console.WriteLine($"Additionally you may change the {nameof(WellDoneArxLevel)} of the {nameof(ScriptFunc)} class however you like. You might need to access classes from {nameof(ArxLibertatisEditorIO)} for this");
+            WriteLine("<br>");
+            WriteLine($"Additionally you may change the {nameof(WellDoneArxLevel)} of the {nameof(ScriptFunc)} class however you like. You might need to access classes from {nameof(ArxLibertatisEditorIO)} for this<br>");
         }
     }
 }
