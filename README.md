@@ -21,7 +21,7 @@ Generates a flat surface of a certain size around a center, using a texture gene
 &nbsp;&nbsp;&nbsp;&nbsp;Vector2 Size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Vector3 Center<br>
 &nbsp;&nbsp;Methods:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable`1 GetPolygons()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetPolygons()<br>
 <br>
 **ArxLibertatisProcGenTools.Generators.Plane.QuadGenerator**<br>
 Generates a single quad in a certain orientation<br>
@@ -42,7 +42,7 @@ Generates a single quad in a certain orientation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;String TexturePath<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Single TransVal<br>
 &nbsp;&nbsp;Methods:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable`1 GetPolygons()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetPolygons()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Polygon GetPolygon()<br>
 <br>
 **ArxLibertatisProcGenTools.Generators.Mesh.CSGGenerator**<br>
@@ -57,7 +57,7 @@ Adds CSG solids to the level<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Int16 Room<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ITextureGenerator TextureGenerator<br>
 &nbsp;&nbsp;Methods:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable`1 GetPolygons()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetPolygons()<br>
 <br>
 **ArxLibertatisProcGenTools.Generators.Mesh.OBJImporter**<br>
 Imports obj files, only supports triangulated files. set Pos/Rot/Scale using WorldMatrix<br>
@@ -67,7 +67,7 @@ Imports obj files, only supports triangulated files. set Pos/Rot/Scale using Wor
 &nbsp;&nbsp;&nbsp;&nbsp;Matrix4x4 WorldMatrix<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Int16 Room<br>
 &nbsp;&nbsp;Methods:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable`1 GetPolygons()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetPolygons()<br>
 <br>
 ### Light generators generate lights that will be added to the level. These are available:
 **ArxLibertatisProcGenTools.Generators.Light.RandomLightGenerator**<br>
@@ -82,7 +82,7 @@ Generates lights at random positions within its shape, with random attributes di
 &nbsp;&nbsp;&nbsp;&nbsp;IValue FalloffEnd<br>
 &nbsp;&nbsp;&nbsp;&nbsp;IValue Intensity<br>
 &nbsp;&nbsp;Methods:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable`1 GetLights()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetLights()<br>
 <br>
 ### Texture generators generate texture names depending on position. These are available:
 **ArxLibertatisProcGenTools.Generators.Texture.SingleTexture**<br>

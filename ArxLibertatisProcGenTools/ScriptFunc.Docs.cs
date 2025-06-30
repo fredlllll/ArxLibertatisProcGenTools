@@ -16,27 +16,29 @@ namespace ArxLibertatisProcGenTools
 
         private static void WriteLine(string text)
         {
+            string line = text;
             if (Markdown)
             {
                 //replace leading spaces
-                if (text.StartsWith(' '))
+                if (line.StartsWith(' '))
                 {
                     int count = text.TakeWhile(x => x == ' ').Count();
+                    var oldLine = line;
+                    line = "";
                     for (int i = 0; i < count; i++)
                     {
-                        Console.Write("&nbsp;");
+                        line += "&nbsp;";
                     }
-                    Console.WriteLine(text[count..]);
+                    line += oldLine[count..];
                 }
-                else
-                {
-                    Console.WriteLine(text);
-                }
+                //escape backticks
+                line = line.Replace("`", "\\`");
             }
             else
             {
-                Console.WriteLine(text.Replace("<br>",""));
+                line = line.Replace("<br>","");
             }
+            Console.WriteLine(line);
         }
 
 
