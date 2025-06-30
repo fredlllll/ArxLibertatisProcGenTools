@@ -13,11 +13,15 @@
   <ItemGroup>
     <PackageReference Include="ArxLibertatisEditorIO" Version="2.1.8" />
     <PackageReference Include="ArxLibertatisLightingCalculatorLib" Version="1.1.3" />
+    <PackageReference Include="DotNetCsg" Version="1.0.1" />
     <PackageReference Include="SharpNoise" Version="0.12.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="docs.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="examplecsg.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="example.ps1">
