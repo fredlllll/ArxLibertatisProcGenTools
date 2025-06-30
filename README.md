@@ -4,13 +4,15 @@ you can modify or generate levels for arx fatalis with it, programatically
 
 there is an example script called example.ps1
 
-run docs.ps1 to display the following documentation
+there is also an examplecsg.ps1 which also includes the use of the https://github.com/talanc/DotNetCsg library to use CSG to create level geometry
+
+run docs.ps1 to display the following documentation in plain text
  
-```
-Powershell Documentation:
-This is a listing of all relevant classes and functions for generating levels in powershell scripts
-Mesh Generators are classes that will generate polygons that will be added to the level. These are available:
-ArxLibertatisProcGenTools.Generators.Plane.FloorGenerator
+
+# Powershell Documentation:
+## This is a listing of all relevant classes and functions for generating levels in powershell scripts
+### Mesh Generators are classes that will generate polygons that will be added to the level. These are available:
+**ArxLibertatisProcGenTools.Generators.Plane.FloorGenerator**
 Generates a flat surface of a certain size around a center, using a texture generator
   Constructors:
     FloorGenerator()
@@ -21,7 +23,7 @@ Generates a flat surface of a certain size around a center, using a texture gene
   Methods:
     IEnumerable`1 GetPolygons()
 
-ArxLibertatisProcGenTools.Generators.Plane.QuadGenerator
+**ArxLibertatisProcGenTools.Generators.Plane.QuadGenerator**
 Generates a single quad in a certain orientation
   Constructors:
     QuadGenerator()
@@ -43,7 +45,21 @@ Generates a single quad in a certain orientation
     IEnumerable`1 GetPolygons()
     Polygon GetPolygon()
 
-ArxLibertatisProcGenTools.Generators.Mesh.OBJImporter
+**ArxLibertatisProcGenTools.Generators.Mesh.CSGGenerator**
+Adds CSG solids to the level
+  Constructors:
+    CSGGenerator()
+  Properties:
+    Solid CsgSolid
+    Vector3 PositionOffset
+    Vector3 Scale
+    PolyType PolyType
+    Int16 Room
+    ITextureGenerator TextureGenerator
+  Methods:
+    IEnumerable`1 GetPolygons()
+
+**ArxLibertatisProcGenTools.Generators.Mesh.OBJImporter**
 Imports obj files, only supports triangulated files. set Pos/Rot/Scale using WorldMatrix
   Constructors:
     OBJImporter(System.String objFilePath, System.String mtlFilePath)
@@ -53,8 +69,8 @@ Imports obj files, only supports triangulated files. set Pos/Rot/Scale using Wor
   Methods:
     IEnumerable`1 GetPolygons()
 
-Light generators generate lights that will be added to the level. These are available:
-ArxLibertatisProcGenTools.Generators.Light.RandomLightGenerator
+### Light generators generate lights that will be added to the level. These are available:
+**ArxLibertatisProcGenTools.Generators.Light.RandomLightGenerator**
 Generates lights at random positions within its shape, with random attributes dictated by their shapes
   Constructors:
     RandomLightGenerator()
@@ -68,8 +84,8 @@ Generates lights at random positions within its shape, with random attributes di
   Methods:
     IEnumerable`1 GetLights()
 
-Texture generators generate texture names depending on position. These are available:
-ArxLibertatisProcGenTools.Generators.Texture.SingleTexture
+### Texture generators generate texture names depending on position. These are available:
+**ArxLibertatisProcGenTools.Generators.Texture.SingleTexture**
 Returns just a fixed texture
   Constructors:
     SingleTexture(System.String path)
@@ -77,8 +93,8 @@ Returns just a fixed texture
   Methods:
     String GetTexturePath(Int32 polygonIndex)
 
-Modifiers modify the currently existing polygons. These are available:
-ArxLibertatisProcGenTools.Modifiers.DetailEnhancer
+### Modifiers modify the currently existing polygons. These are available:
+**ArxLibertatisProcGenTools.Modifiers.DetailEnhancer**
 Generates extra polygons in an area so it can be sculpted to a greater detail by modifiers
   Constructors:
     DetailEnhancer()
@@ -87,7 +103,7 @@ Generates extra polygons in an area so it can be sculpted to a greater detail by
   Methods:
     Void Apply(ArxLibertatisEditorIO.WellDoneIO.WellDoneArxLevel wdl)
 
-ArxLibertatisProcGenTools.Modifiers.Rumble
+**ArxLibertatisProcGenTools.Modifiers.Rumble**
 Adds random offsets(noise) to polygons in an area
   Constructors:
     Rumble()
@@ -98,8 +114,8 @@ Adds random offsets(noise) to polygons in an area
   Methods:
     Void Apply(ArxLibertatisEditorIO.WellDoneIO.WellDoneArxLevel wdl)
 
-Shapes can be used in a lot of ways to shape the output of other classes. These are available:
-ArxLibertatisProcGenTools.Shapes.Cuboid
+### Shapes can be used in a lot of ways to shape the output of other classes. These are available:
+**ArxLibertatisProcGenTools.Shapes.Cuboid**
 The shape of a cube
   Constructors:
     Cuboid()
@@ -110,7 +126,7 @@ The shape of a cube
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-ArxLibertatisProcGenTools.Shapes.Everywhere
+**ArxLibertatisProcGenTools.Shapes.Everywhere**
   Constructors:
     Everywhere()
   Properties:
@@ -118,7 +134,7 @@ ArxLibertatisProcGenTools.Shapes.Everywhere
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-ArxLibertatisProcGenTools.Shapes.FixedVector
+**ArxLibertatisProcGenTools.Shapes.FixedVector**
 Returns a fixed value
   Constructors:
     FixedVector()
@@ -129,7 +145,7 @@ Returns a fixed value
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-ArxLibertatisProcGenTools.Shapes.NullShape
+**ArxLibertatisProcGenTools.Shapes.NullShape**
 Always returns zero
   Constructors:
     NullShape()
@@ -138,7 +154,7 @@ Always returns zero
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-ArxLibertatisProcGenTools.Shapes.MultiplyShape
+**ArxLibertatisProcGenTools.Shapes.MultiplyShape**
 returns the multiplication of two shapes
   Constructors:
     MultiplyShape()
@@ -149,7 +165,7 @@ returns the multiplication of two shapes
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-ArxLibertatisProcGenTools.Shapes.Sphere
+**ArxLibertatisProcGenTools.Shapes.Sphere**
 the shape of a sphere
   Constructors:
     Sphere()
@@ -162,8 +178,8 @@ the shape of a sphere
     Vector3 GetAffectedness(System.Numerics.Vector3 position)
     Vector3 GetRandomPosition()
 
-Values are similar to Shapes, just one dimensional. These are available:
-ArxLibertatisProcGenTools.Values.FixedValue
+### Values are similar to Shapes, just one dimensional. These are available:
+**ArxLibertatisProcGenTools.Values.FixedValue**
 A fixed value
   Constructors:
     FixedValue()
@@ -174,7 +190,7 @@ A fixed value
   Methods:
     Single GetValue(System.Numerics.Vector3 input)
 
-ArxLibertatisProcGenTools.Values.NullValue
+**ArxLibertatisProcGenTools.Values.NullValue**
 Always returns zero
   Constructors:
     NullValue()
@@ -182,7 +198,7 @@ Always returns zero
   Methods:
     Single GetValue(System.Numerics.Vector3 input)
 
-ArxLibertatisProcGenTools.Values.RandomValue
+**ArxLibertatisProcGenTools.Values.RandomValue**
 random value (uniform)
   Constructors:
     RandomValue()
@@ -192,7 +208,7 @@ random value (uniform)
   Methods:
     Single GetValue(System.Numerics.Vector3 input)
 
-ArxLibertatisProcGenTools.Values.SimplexNoiseValue
+**ArxLibertatisProcGenTools.Values.SimplexNoiseValue**
 random value (simplex, like perlin but better), get Noise property to change parameters
   Constructors:
     SimplexNoiseValue()
@@ -201,12 +217,14 @@ random value (simplex, like perlin but better), get Noise property to change par
   Methods:
     Single GetValue(System.Numerics.Vector3 input)
 
-In addition to these classes, there is the ScriptFunc class, which contains static functions that make scripting easier:
+### In addition to these classes, there is the ScriptFunc class, which contains static functions that make scripting easier:
   Properties:
     static WellDoneArxLevel Level
+    static Boolean SkipLighting
+      Skip the lighting calculation on save
   Methods:
     static Void Clear()
-      deletes the level currently in memory. required cause its persistent during the powershell session
+      deletes the level currently in memory and resets parameters. required cause its persistent during the powershell session
     static Void SetDataDir(System.String dataDir)
       Set data dir that the level is saved to (and can be loaded from)
     static Void LoadLevel(System.String name)
@@ -222,6 +240,3 @@ In addition to these classes, there is the ScriptFunc class, which contains stat
     static Void SetLightingProfile(ArxLibertatisLightingCalculatorLib.LightingProfile lightingProfile)
     static Void SetPlayerStart(System.Numerics.Vector3 position)
     static Void PrintPsDocs()
-
-Additionally you may change the WellDoneArxLevel of the ScriptFunc class however you like. You might need to access classes from ArxLibertatisEditorIO for this
-```

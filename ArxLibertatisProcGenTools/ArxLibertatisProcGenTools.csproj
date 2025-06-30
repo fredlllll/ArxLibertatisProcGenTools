@@ -6,8 +6,8 @@
     <StartupObject></StartupObject>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

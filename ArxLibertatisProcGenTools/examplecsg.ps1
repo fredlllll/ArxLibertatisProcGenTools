@@ -87,6 +87,7 @@ $csg = [CSGGenerator]::new()
 $csg.CsgSolid = $solid
 $csg.PositionOffset = [Vector3]::new(6500,-150,6000)
 $csg.Scale = [Vector3]::new(100,100,100)
+#polytype glow will make the resulting mesh always visible at 100% brightess. remove this line to just have normal graphics
 $csg.PolyType = [PolyType]::GLOW
 $csg.TextureGenerator = $floor.TextureGenerator
 [ArxLibertatisProcGenTools.ScriptFunc]::Apply($csg)
