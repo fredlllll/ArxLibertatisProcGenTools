@@ -137,7 +137,7 @@ ScriptFunc.SaveLevel("level1"); // saves/overwrites level one, will do lighting 
 //if for some reason you want to skip calculation of lighting at save, you can use ScriptFunc.SkipLighting and set it to true
 ```
 
-To run the program, press **F5** in Visual Studio.
+To run the program, press **F5** in Visual Studio. This will replace any existing level1 in your DataDir. Start a new quest in the game to load into this level and have a look around
 
 ---
 
