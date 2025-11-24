@@ -18,8 +18,8 @@ Download the free **Visual Studio Community Edition**:
 2. Select **Create a new project**  
 3. Choose **Console App**
 
-![Create project](create project.png)  
-![Created project](created project.png)
+![Create project](create%20project.png)  
+![Created project](created%20project.png)
 
 ---
 
@@ -28,13 +28,13 @@ Download the free **Visual Studio Community Edition**:
 1. Right-click your project or use the project menu up top
 2. Select **Manage NuGet Packages**
 
-![NuGet manager](manage nuget packages.png)
+![NuGet manager](manage%20nuget%20packages.png)
 
 3. Search for **ArxLibertatisProcGenTools**  
 4. Install it
 
-![Find package](find arxlibertatisprocgentools.png)  
-![Install package](install procgentools.png)
+![Find package](find%20arxlibertatisprocgentools.png)  
+![Install package](install%20procgentools.png)
 
 ---
 
