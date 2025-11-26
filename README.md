@@ -240,6 +240,9 @@ random value (simplex, like perlin but better), get Noise property to change par
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Applies the Light Generator to the level<br>
 &nbsp;&nbsp;&nbsp;&nbsp;static Void SetLightingProfile(ArxLibertatisLightingCalculatorLib.LightingProfile lightingProfile)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;static Void SetPlayerStart(System.Numerics.Vector3 position)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static Void KillRunningArx()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static Void StartArxFatalis(Boolean noClip, Boolean killRunningArx)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;static Void StartArxFatalis(Int32 levelId, Boolean noClip, Boolean killRunningArx)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;static Void PrintPsDocs()<br>
 <br>
 Additionally you may change the WellDoneArxLevel of the ScriptFunc class however you like. You might need to access classes from ArxLibertatisEditorIO for this<br>

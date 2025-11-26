@@ -132,7 +132,9 @@ namespace ArxLibertatisProcGenToolsTest
 
             //ProcGen();
             //Console.ReadLine();
-            ScriptFunc.StartArxFatalis(3);
+            //ScriptFunc.StartArxFatalis(3);
+            ScriptFunc.Markdown = true;
+            ScriptFunc.PrintPsDocs();
         }
     }
 }
