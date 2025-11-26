@@ -6,6 +6,8 @@ using ArxLibertatisLightingCalculatorLib;
 using ArxLibertatisProcGenTools.Generators;
 using ArxLibertatisProcGenTools.Modifiers;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Numerics;
 
 namespace ArxLibertatisProcGenTools
@@ -106,6 +108,59 @@ namespace ArxLibertatisProcGenTools
         {
             Console.WriteLine("Setting Player Start Position");
             playerStartPosition = position;
+        }
+
+        public static void KillRunningArx()
+        {
+            //should work on windows and linux
+            foreach (var p in Process.GetProcessesByName("arx"))
+            {
+                try
+                {
+                    p.Kill();
+                    p.WaitForExit();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("could not stop arx process with pid " + p.Id);
+                    Console.WriteLine(e.ToString());
+                }
+            }
+        }
+
+        private static void StartArxFatalis(ProcessStartInfo psi, bool noClip, bool killRunningArx)
+        {
+            bool isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+
+            //kill running arx exe to prevent buildup of running instances
+            if (killRunningArx)
+            {
+                KillRunningArx();
+            }
+            var exe = Path.Combine(ArxPaths.DataDir, "arx");
+            if (isWindows)
+            {
+                exe += ".exe";
+            }
+            psi.FileName = exe;
+            if (noClip)
+            {
+                psi.ArgumentList.Add("--noclip");
+            }
+            Process.Start(psi);
+        }
+
+        public static void StartArxFatalis(bool noClip = false, bool killRunningArx = true)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+            StartArxFatalis(psi, noClip, killRunningArx);
+        }
+
+        public static void StartArxFatalis(int levelId, bool noClip = false, bool killRunningArx = true)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.ArgumentList.Add("--loadlevel=" + levelId);
+            StartArxFatalis(psi, noClip, killRunningArx);
         }
     }
 }
