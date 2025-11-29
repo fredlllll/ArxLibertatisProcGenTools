@@ -1,10 +1,10 @@
 ﻿using ArxLibertatisEditorIO.Util;
+using Csg;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using Csg;
-using static Csg.Solids;
 using System.IO;
+using System.Numerics;
+using static Csg.Solids;
 
 namespace ArxLibertatisProcGenTools.Generators.Mesh
 {
@@ -14,6 +14,7 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
         public Solid CsgSolid { get; set; } = Cube(1, true);
         public Vector3 PositionOffset { get; set; } = Vector3.Zero;
         public Vector3 Scale { get; set; } = Vector3.One;
+        public Vector3 UVScale { get; set; } = Vector3.One;
         public PolyType PolyType { get; set; } = PolyType.None;
         public short Room { get; set; } = 1;
         public ITextureGenerator? TextureGenerator { get; set; }
@@ -25,7 +26,7 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
                 throw new InvalidOperationException("No texture generator set on csg generator");
             }
             int i = 0;
-            foreach (var triangle in GetTriangles(CsgSolid))
+            foreach (var triangle in GetTriangles(CsgSolid, UVScale))
             {
                 var arxPoly = new ArxLibertatisEditorIO.WellDoneIO.Polygon();
                 arxPoly.room = Room;
@@ -40,6 +41,38 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
             }
         }
 
+        public BoundingBox GetSolidBounds()
+        {
+            //Bounds is private for some reason, reflection it is
+            var boundsProp = typeof(Solid).GetProperty("Bounds", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var bounds = (BoundingBox)boundsProp.GetValue(CsgSolid, null);
+            return bounds;
+        }
+
+        public Vector3 GetSolidSize()
+        {
+            var bounds = GetSolidBounds();
+            var min = bounds.Min;
+            var max = bounds.Max;
+
+            var sizeX = max.X - min.X;
+            var sizeY = max.Y - min.Y;
+            var sizeZ = max.Z - min.Z;
+            return new Vector3((float)sizeX, (float)sizeY, (float)sizeZ);
+        }
+
+        public Vector3 GetFinalSize()
+        {
+            var bounds = GetSolidBounds();
+            var min = bounds.Min;
+            var max = bounds.Max;
+
+            var sizeX = max.X - min.X;
+            var sizeY = max.Y - min.Y;
+            var sizeZ = max.Z - min.Z;
+            return new Vector3((float)sizeX * Scale.X, (float)sizeY * Scale.Y, (float)sizeZ * Scale.Z);
+        }
+
         private struct Triangle
         {
             public Polygon polygon;
@@ -51,7 +84,7 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
             X, Y, Z
         }
 
-        private static IEnumerable<Triangle> GetTriangles(Solid solid)
+        private static IEnumerable<Triangle> GetTriangles(Solid solid, Vector3 UVscale)
         {
             //Bounds is private for some reason, reflection it is
             var boundsProp = typeof(Solid).GetProperty("Bounds", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -81,16 +114,16 @@ namespace ArxLibertatisProcGenTools.Generators.Mesh
                     switch (majorAxis)
                     {
                         case Axis.X:
-                            u = (p.Y - min.Y) / sizeY;
-                            v = (p.Z - min.Z) / sizeZ;
+                            u = (p.Y - min.Y) / sizeY * UVscale.Y;
+                            v = (p.Z - min.Z) / sizeZ * UVscale.Z;
                             break;
                         case Axis.Y:
-                            u = (p.X - min.X) / sizeX;
-                            v = (p.Z - min.Z) / sizeZ;
+                            u = (p.X - min.X) / sizeX * UVscale.X;
+                            v = (p.Z - min.Z) / sizeZ * UVscale.Z;
                             break;
                         case Axis.Z:
-                            u = (p.X - min.X) / sizeX;
-                            v = (p.Y - min.Y) / sizeY;
+                            u = (p.X - min.X) / sizeX * UVscale.X;
+                            v = (p.Y - min.Y) / sizeY * UVscale.Y;
                             break;
                         default:
                             throw new InvalidDataException();
