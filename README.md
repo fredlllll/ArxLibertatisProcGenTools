@@ -56,11 +56,15 @@ Adds CSG solids to the level<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Solid CsgSolid<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Vector3 PositionOffset<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Vector3 Scale<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector3 UVScale<br>
 &nbsp;&nbsp;&nbsp;&nbsp;PolyType PolyType<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Int16 Room<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ITextureGenerator TextureGenerator<br>
 &nbsp;&nbsp;Methods:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;IEnumerable\`1 GetPolygons()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BoundingBox GetSolidBounds()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector3 GetSolidSize()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Vector3 GetFinalSize()<br>
 <br>
 **ArxLibertatisProcGenTools.Generators.Mesh.OBJImporter**<br>
 Imports obj files, only supports triangulated files. set Pos/Rot/Scale using WorldMatrix<br>
